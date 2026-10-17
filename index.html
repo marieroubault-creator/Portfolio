@@ -1,0 +1,868 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marie Roubault · Portfolio</title>
+<meta name="description" content="Portfolio de Marie Roubault : des outils numériques pour rapprocher les personnes de l'emploi.">
+<meta name="theme-color" content="#FFF8F0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Della+Respira&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Douceurs */
+    --cream:#FFFBF6;
+    --lavender:#E9E4FF;
+    --mint:#DFF3EA;
+    --peach:#FFE3D3;
+    --sky:#DDEBFF;
+    /* Touches pop */
+    --coral:#FF5C7A;
+    --sun:#FFC93C;
+    --violet:#7B5CFF;
+    --teal:#19C3A6;
+    /* Texte et lignes */
+    --ink:#2B2540;
+    --ink-soft:#5B5573;
+    --line:rgba(43,37,64,.18);
+    --radius:4px;
+    --serif:"Della Respira",Georgia,"Times New Roman",serif;
+    --sans:"Della Respira",Georgia,"Times New Roman",serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:24px}
+  body{
+    margin:0;background:var(--cream);color:var(--ink);
+    font-family:var(--sans);font-size:1.06rem;line-height:1.65;font-synthesis:none;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.12;margin:0;letter-spacing:0}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--violet);outline-offset:3px}
+  .wrap{width:min(1120px,100% - 3rem);margin-inline:auto}
+
+  /* ---------- Menu burger ---------- */
+  .burger{
+    position:fixed;top:16px;right:16px;z-index:40;
+    width:48px;height:48px;padding:0;cursor:pointer;
+    border:1px solid var(--ink);border-radius:var(--radius);background:var(--cream);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+    transition:background .15s;
+  }
+  .burger:hover{background:var(--sun)}
+  .burger span{display:block;width:22px;height:2px;background:var(--ink);transition:transform .2s ease,opacity .2s ease}
+  .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+  .burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+  .menu-backdrop{
+    position:fixed;inset:0;z-index:30;background:rgba(43,37,64,.28);
+    opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s ease;
+  }
+  .menu{
+    position:fixed;top:0;right:0;bottom:0;z-index:35;width:min(340px,86vw);
+    background:var(--cream);border-left:1px solid var(--ink);
+    padding:5.5rem 2rem 2rem;display:flex;flex-direction:column;overflow-y:auto;
+    transform:translateX(100%);visibility:hidden;
+    transition:transform .25s ease,visibility .25s ease;
+  }
+  .menu::before{content:"";position:absolute;left:-1px;top:0;bottom:0;width:4px;background:var(--coral)}
+  .menu-title{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:.6rem}
+  .menu a{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding:.95rem 0;border-bottom:1px solid var(--line);
+    text-decoration:none;font-family:var(--serif);font-size:1.5rem;transition:color .15s,padding-left .15s;
+  }
+  .menu a small{font-size:.78rem;letter-spacing:.14em;color:var(--coral)}
+  .menu a:hover{color:var(--violet);padding-left:.4rem}
+  body.menu-open{overflow:hidden}
+  body.menu-open .menu{transform:none;visibility:visible}
+  body.menu-open .menu-backdrop{opacity:1;visibility:visible}
+
+  /* ---------- En-tête ---------- */
+  .hero{position:relative;padding:5rem 0 4.5rem;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero .shape{position:absolute;z-index:0;opacity:.35}
+  .s1{width:300px;height:300px;background:var(--lavender);top:-110px;right:6%;transform:rotate(12deg)}
+  .s2{width:130px;height:130px;background:var(--mint);bottom:-50px;right:24%}
+  .s3{width:56px;height:56px;background:var(--sun);top:70px;right:3%}
+  .s4{width:16px;height:16px;background:var(--coral);bottom:90px;right:12%}
+  .hero .wrap{position:relative;z-index:1}
+  .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:3rem}
+  .hero-photo{margin:0;position:relative}
+  .hero-photo img{
+    display:block;width:clamp(240px,28vw,340px);height:auto;aspect-ratio:1;
+    border-radius:50%;object-fit:cover;background:var(--cream);
+    box-shadow:10px 10px 0 var(--lavender);
+  }
+  .hero-photo::before{
+    content:"";position:absolute;z-index:-1;left:-14px;bottom:-14px;
+    width:70px;height:70px;background:var(--coral);opacity:.8;
+  }
+  .kicker{
+    display:inline-flex;align-items:center;gap:.6rem;
+    font-size:.8rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);
+    margin-bottom:1.4rem;
+  }
+  .kicker::before{content:"";width:28px;height:2px;background:var(--coral)}
+  .hero h1{font-size:clamp(2.3rem,5.4vw,3.9rem);font-weight:600;max-width:17ch}
+  .hero h1 mark{
+    background:linear-gradient(transparent 62%,rgba(255,92,122,.55) 62% 92%,transparent 92%);
+    color:inherit;padding:0 .05em;
+  }
+  .hero p.lead{max-width:58ch;color:var(--ink-soft);font-size:1.125rem;margin:1.5rem 0 2.1rem}
+  .actions{display:flex;flex-wrap:wrap;gap:.75rem}
+  .btn{
+    display:inline-flex;align-items:center;gap:.55rem;text-decoration:none;
+    font-weight:600;font-size:.95rem;padding:.8rem 1.3rem;border-radius:var(--radius);
+    border:1px solid var(--ink);background:transparent;color:var(--ink);
+    transition:background .15s,color .15s,border-color .15s,transform .15s;
+  }
+  .btn:hover{background:var(--ink);color:var(--cream)}
+  .btn.primary{background:var(--ink);color:var(--cream)}
+  .btn.primary:hover{background:var(--coral);border-color:var(--coral);color:#fff}
+  .btn.accent{background:var(--sun);border-color:var(--sun)}
+  .btn.accent:hover{background:var(--ink);border-color:var(--ink);color:var(--cream)}
+
+
+  /* ---------- Sections ---------- */
+  section{padding:4rem 0 1rem}
+  .section-head{display:flex;align-items:baseline;gap:1rem;margin-bottom:.7rem}
+  .section-head h2{font-size:clamp(1.7rem,3.6vw,2.4rem)}
+  .section-sub{color:var(--ink-soft);margin:0 0 2.2rem;max-width:62ch}
+  .rule{height:1px;background:var(--line);margin-bottom:2rem}
+
+  /* ---------- Vignettes ---------- */
+  .grid{display:grid;gap:1.75rem;grid-template-columns:repeat(2,1fr)}
+  .card{
+    position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    overflow:hidden;
+    transition:border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+  }
+  .card::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--accent,var(--coral));z-index:3}
+  .card:hover,.card:focus-within{
+    border-color:var(--ink);
+    box-shadow:0 14px 30px -14px rgba(43,37,64,.35);
+    transform:translateY(-3px);
+  }
+  .card-link{display:flex;flex-direction:column;height:100%;text-decoration:none}
+  .thumb{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--tint);border-bottom:1px solid var(--line)}
+  .thumb svg{position:absolute;inset:0;width:100%;height:100%;display:block;transition:transform .4s ease}
+  .card:hover .thumb svg{transform:scale(1.03)}
+  /* Capture d'écran facultative : si le fichier existe, elle remplace l'illustration */
+  .thumb .shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;background:#fff}
+  .tag{
+    position:absolute;left:14px;bottom:14px;z-index:2;
+    background:var(--ink);color:#fff;border-radius:2px;
+    font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.28rem .6rem;
+  }
+  .body{padding:1.4rem 1.5rem 1.5rem;display:flex;flex-direction:column;gap:.55rem;flex:1}
+  .body h3{font-size:1.55rem}
+  .body p{margin:0;color:var(--ink-soft);font-size:.98rem}
+  .go{
+    margin-top:auto;padding-top:.9rem;font-weight:600;font-size:.92rem;
+    display:inline-flex;align-items:center;gap:.5rem;color:var(--ink);
+  }
+  .go b{
+    font-weight:600;border-bottom:2px solid var(--accent,var(--coral));padding-bottom:1px;
+  }
+  .go span{display:inline-block;transition:transform .18s ease}
+  .card:hover .go span{transform:translate(3px,-3px)}
+
+  /* ---------- Classeur à intercalaires ---------- */
+  .binder{--sheet:#EDF8F4;margin-top:.4rem}
+  .binder[data-active="sites"]{--sheet:#EDF8F4}
+  .binder[data-active="affiches"]{--sheet:#FFF0E7}
+  .binder[data-active="supports"]{--sheet:#F3F0FF}
+  .binder[data-active="videos"]{--sheet:#ECF4FF}
+
+  .tabs{
+    display:flex;flex-wrap:wrap;align-items:flex-end;gap:5px;
+    margin:0;padding:0 0 0 18px;position:relative;z-index:2;
+  }
+  .tab{
+    --c:#DFF3EA;--sheet-t:#EDF8F4;--acc:#19C3A6;
+    position:relative;appearance:none;cursor:pointer;font:inherit;white-space:nowrap;
+    color:var(--ink-soft);background:var(--c);
+    border:1px solid var(--ink);border-bottom:0;border-radius:8px 8px 0 0;
+    padding:.55rem 1.3rem .5rem;margin-top:9px;
+    transition:margin-top .15s ease,color .15s ease;
+  }
+  .tab::before{
+    content:"";position:absolute;left:-1px;right:-1px;top:-1px;height:4px;
+    background:var(--acc);border-radius:8px 8px 0 0;
+  }
+  .tab:hover{margin-top:4px;color:var(--ink)}
+  .tab[aria-selected="true"]{
+    margin-top:0;margin-bottom:-1px;z-index:3;color:var(--ink);background:var(--sheet-t);
+    padding:.85rem 1.4rem calc(.5rem + 1px);
+  }
+  .tab-sites{--c:#DFF3EA;--sheet-t:#EDF8F4;--acc:#19C3A6}
+  .tab-affiches{--c:#FFE3D3;--sheet-t:#FFF0E7;--acc:#FF5C7A}
+  .tab-supports{--c:#E9E4FF;--sheet-t:#F3F0FF;--acc:#7B5CFF}
+  .tab-videos{--c:#DDEBFF;--sheet-t:#ECF4FF;--acc:#FFC93C}
+
+  .binder-body{
+    position:relative;z-index:1;background:var(--sheet);
+    border:1px solid var(--ink);border-radius:0 6px 6px 6px;
+    padding:2rem 1.8rem 1.4rem;transition:background .2s ease;
+  }
+  .panel-intro{color:var(--ink-soft);margin:0 0 1.6rem;max-width:62ch}
+
+  /* ---------- Affiches et supports ---------- */
+  .docs{display:grid;gap:1.5rem;grid-template-columns:repeat(3,1fr)}
+  .doc .thumb{aspect-ratio:3/4}
+  .doc.slide .thumb{aspect-ratio:16/10}
+  .doc .body{padding:1.1rem 1.2rem 1.25rem}
+  .doc .body h3{font-size:1.3rem}
+  .doc .body p{font-size:.95rem}
+  .empty{color:var(--ink-soft);padding:2rem;border:1px dashed var(--line);border-radius:var(--radius);margin:0;grid-column:1/-1}
+
+  /* ---------- Sous-sections des affiches ---------- */
+  .subsection{margin-bottom:2.6rem}
+  .sub-title{
+    display:flex;align-items:center;gap:.7rem;font-size:1.5rem;
+    margin:0 0 1.2rem;padding-bottom:.6rem;border-bottom:1px solid var(--line);
+  }
+  .sub-title::before{content:"";width:10px;height:10px;background:var(--coral);flex:none}
+
+  /* ---------- Sous-menu du menu burger ---------- */
+  .menu a.has-sub{border-bottom:0;padding-bottom:.4rem}
+  .menu .menu-sub{display:flex;gap:.6rem;padding:.2rem 0 1rem;border-bottom:1px solid var(--line)}
+  .menu .menu-sub a{
+    flex:1;justify-content:center;padding:.55rem .6rem;
+    border:1px solid var(--line);border-radius:var(--radius);font-size:1.05rem;
+  }
+  .menu .menu-sub a:hover{padding-left:.6rem;border-color:var(--ink);background:var(--sun);color:var(--ink)}
+
+  /* ---------- Vidéos ---------- */
+  .doc.video .thumb{aspect-ratio:16/10}
+  .thumb video.shot{background:transparent}
+  .doc.video .thumb::after{
+    content:"\25B6\FE0E";position:absolute;left:50%;top:50%;z-index:2;
+    width:56px;height:56px;margin:-28px 0 0 -28px;display:grid;place-items:center;
+    background:var(--accent,var(--coral));color:#fff;border:2px solid var(--ink);border-radius:var(--radius);
+    font-size:1.2rem;padding-left:3px;transition:transform .18s ease;
+  }
+  .doc.video .card-link:hover .thumb::after{transform:scale(1.08)}
+  .vdialog{
+    width:min(960px,94vw);max-height:92vh;padding:0;overflow:hidden;
+    border:1px solid var(--ink);border-top:4px solid var(--coral);border-radius:var(--radius);
+    background:#fff;color:var(--ink);
+  }
+  .vdialog::backdrop{background:rgba(43,37,64,.6)}
+  .vbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.7rem .8rem .7rem 1.2rem;border-bottom:1px solid var(--line)}
+  .vtitle{margin:0;font-family:var(--serif);font-size:1.2rem}
+  .vclose{
+    appearance:none;background:none;border:1px solid var(--ink);border-radius:var(--radius);
+    width:40px;height:40px;flex:none;cursor:pointer;font:inherit;font-size:1.1rem;color:var(--ink);
+  }
+  .vclose:hover{background:var(--sun)}
+  .vstage{aspect-ratio:16/9;width:100%;background:#000}
+  .vstage video,.vstage iframe{display:block;width:100%;height:100%;border:0}
+
+  /* ---------- À propos ---------- */
+  .about{display:grid;gap:1.75rem;grid-template-columns:1.25fr 1fr}
+  .box{background:#fff;border:1px solid var(--line);border-left:4px solid var(--coral);border-radius:var(--radius);padding:1.7rem 1.8rem}
+  .box.alt{background:rgba(233,228,255,.5);border-color:var(--line);border-left:4px solid var(--violet)}
+  .box h3{font-size:1.3rem;margin-bottom:.8rem}
+  .box p{margin:0 0 .75rem}
+  .box p:last-child{margin-bottom:0}
+  .chips{display:flex;flex-wrap:wrap;gap:.5rem;padding:0;margin:0;list-style:none}
+  .chips li{
+    background:#fff;border:1px solid var(--line);border-radius:2px;
+    padding:.28rem .75rem;font-weight:500;font-size:.9rem;
+    border-left:3px solid var(--c,var(--coral));
+  }
+  .chips li:nth-child(4n+1){--c:var(--teal)}
+  .chips li:nth-child(4n+2){--c:var(--coral)}
+  .chips li:nth-child(4n+3){--c:var(--sun)}
+  .chips li:nth-child(4n+4){--c:var(--violet)}
+
+  /* ---------- Contact ---------- */
+  .contact{
+    margin-top:3rem;background:rgba(223,243,234,.55);border:1px solid var(--line);border-radius:var(--radius);
+    padding:2rem 2.2rem;display:flex;flex-wrap:wrap;gap:1.2rem;align-items:center;justify-content:space-between;
+  }
+  .contact h2{font-size:1.5rem}
+  .contact p{margin:.3rem 0 0;color:var(--ink-soft)}
+
+  /* ---------- Pied de page ---------- */
+  footer{margin-top:4rem;background:rgba(233,228,255,.45);color:var(--ink);padding:2.2rem 0 2.6rem;border-top:1px solid var(--line)}
+  footer p{margin:.3rem 0;font-size:.92rem;color:var(--ink-soft)}
+  footer strong{color:var(--ink);font-weight:400;text-decoration:underline;text-decoration-color:var(--coral);text-underline-offset:3px}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:820px){
+    .grid,.about{grid-template-columns:1fr}
+    .hero-grid{grid-template-columns:1fr;gap:2rem}
+    .hero-photo{order:-1;justify-self:start}
+    .hero-photo img{width:150px}
+    .hero-photo::before{width:44px;height:44px;left:-8px;bottom:-8px}
+    .hero{padding:4.5rem 0 3rem}
+    .s1,.s3{opacity:.7}
+    .s4{display:none}
+    .contact{padding:1.6rem}
+  }
+  @media (max-width:520px){
+    .wrap{width:min(1120px,100% - 2rem)}
+  }
+  @media (max-width:820px){
+    .docs{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width:480px){
+    .docs{grid-template-columns:1fr}
+    .tab{padding:.5rem .8rem .45rem;font-size:.95rem}
+    .tab[aria-selected="true"]{padding:.75rem .9rem calc(.45rem + 1px)}
+    .binder-body{padding:1.4rem 1rem 1rem}
+  }
+  @media (max-width:600px){
+    .tabs{flex-wrap:nowrap;gap:3px;padding:0 8px}
+    .tab{
+      flex:1 1 0;min-width:0;white-space:normal;text-align:center;
+      font-size:.8rem;line-height:1.15;padding:.5rem .25rem .45rem;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .tab[aria-selected="true"]{padding:.8rem .25rem calc(.45rem + 1px)}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *{transition:none !important}
+  }
+</style>
+</head>
+<body>
+
+<button class="burger" id="burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu">
+  <span></span><span></span><span></span>
+</button>
+<div class="menu-backdrop" id="menu-backdrop"></div>
+<nav class="menu" id="menu" aria-label="Navigation principale">
+  <div class="menu-title">Menu</div>
+  <a href="#top"><span>Accueil</span></a>
+  <a href="#creations" data-tab-link="sites"><span>Sites en ligne</span></a>
+  <a href="#creations" data-tab-link="affiches" class="has-sub"><span>Affiches</span></a>
+  <div class="menu-sub">
+    <a href="#affiches-saint-denis" data-tab-link="affiches">Saint-Denis</a>
+    <a href="#affiches-saint-malo" data-tab-link="affiches">Saint-Malo</a>
+  </div>
+  <a href="#creations" data-tab-link="supports"><span>Supports</span></a>
+  <a href="#creations" data-tab-link="videos"><span>Vidéos</span></a>
+  <a href="#a-propos"><span>À propos</span></a>
+  <a href="#contact"><span>Contact</span></a>
+  <a href="cv.pdf" target="_blank" rel="noopener"><span>Mon CV (PDF)</span><small>↗</small></a>
+</nav>
+
+<header class="hero" id="top">
+  <span class="shape s1"></span><span class="shape s2"></span><span class="shape s3"></span><span class="shape s4"></span>
+  <div class="wrap hero-grid">
+    <div class="hero-text">
+      <div class="kicker">Marie Roubault · Portfolio</div>
+      <h1>Des outils pour rapprocher chacun de <mark>l'emploi</mark></h1>
+      <p class="lead">
+        Parcours, jeux et applis que j'ai imaginés pour rendre les métiers plus accessibles,
+        l'orientation plus simple et le numérique plus accueillant pour tous les publics.
+      </p>
+      <div class="actions">
+        <a class="btn primary" href="#creations">Voir mes créations <span aria-hidden="true">↓</span></a>
+        <a class="btn accent" href="cv.pdf" target="_blank" rel="noopener">Télécharger mon CV</a>
+        <a class="btn" href="mailto:votre-adresse@exemple.fr">Me contacter</a>
+      </div>
+    </div>
+    <figure class="hero-photo">
+      <img src="img/photo.jpg" width="600" height="600" alt="Portrait de Marie Roubault" fetchpriority="high">
+    </figure>
+  </div>
+</header>
+
+<main>
+  <section id="creations">
+    <div class="wrap">
+      <div class="section-head"><h2>Mes réalisations</h2></div>
+      <p class="section-sub">Mes sites en ligne, mes affiches, mes supports de présentation et mes vidéos. Choisissez un onglet.</p>
+
+      <div class="binder" data-active="sites">
+      <div class="tabs" role="tablist" aria-label="Types de réalisations">
+        <button class="tab tab-sites" type="button" role="tab" id="tab-sites" data-tab="sites" aria-selected="true" aria-controls="panel-sites">Sites en ligne</button>
+        <button class="tab tab-affiches" type="button" role="tab" id="tab-affiches" data-tab="affiches" aria-selected="false" aria-controls="panel-affiches" tabindex="-1">Affiches</button>
+        <button class="tab tab-supports" type="button" role="tab" id="tab-supports" data-tab="supports" aria-selected="false" aria-controls="panel-supports" tabindex="-1">Supports de présentation</button>
+        <button class="tab tab-videos" type="button" role="tab" id="tab-videos" data-tab="videos" aria-selected="false" aria-controls="panel-videos" tabindex="-1">Vidéos</button>
+      </div>
+
+      <div class="binder-body">
+
+      <div class="panel" role="tabpanel" id="panel-sites" aria-labelledby="tab-sites" tabindex="0">
+      <p class="panel-intro">Quatre projets en ligne. Cliquez sur une vignette pour l'ouvrir dans un nouvel onglet.</p>
+
+      <div class="grid">
+
+        <!-- 1 : Parcours à la carte -->
+        <article class="card" style="--tint:var(--mint);--accent:var(--coral)">
+          <a class="card-link" href="https://marieroubault-creator.github.io/parcours-cv-game/" target="_blank" rel="noopener" aria-label="Ouvrir Parcours à la carte (nouvel onglet)">
+            <div class="thumb">
+              <svg viewBox="0 0 400 250" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+                <rect width="400" height="250" fill="#DFF3EA"/>
+                <path d="M66 125 H160 V65 H320" fill="none" stroke="#2B2540" stroke-width="3" stroke-dasharray="10 8"/>
+                <path d="M160 125 V185 H320" fill="none" stroke="#2B2540" stroke-width="3" stroke-dasharray="10 8"/>
+                <rect x="38" y="111" width="28" height="28" rx="2" fill="#fff" stroke="#2B2540" stroke-width="3"/>
+                <rect x="47" y="120" width="10" height="10" fill="#19C3A6"/>
+                <rect x="320" y="43" width="44" height="44" rx="3" fill="#FF5C7A" stroke="#2B2540" stroke-width="3"/>
+                <rect x="320" y="163" width="44" height="44" rx="3" fill="#FFC93C" stroke="#2B2540" stroke-width="3"/>
+                <rect x="180" y="104" width="100" height="28" rx="2" fill="#fff" stroke="#2B2540" stroke-width="2.5"/>
+                <text x="230" y="123" text-anchor="middle" font-family="Della Respira,Georgia,serif" font-size="13" font-weight="700" fill="#2B2540">AU CHOIX</text>
+              </svg>
+              <img class="shot" src="img/parcours-a-la-carte.png" alt="Capture d'écran de Parcours à la carte" loading="lazy" onerror="this.remove()">
+              <span class="tag">Parcours</span>
+            </div>
+            <div class="body">
+              <h3>Parcours à la carte</h3>
+              <p>Deux parcours au choix pour aller à la rencontre des employeurs de l'hôtellerie-restauration pendant la saison à Saint-Malo : déposer son CV, découvrir les immersions, donner son avis.</p>
+              <span class="go"><b>Ouvrir le site</b><span aria-hidden="true">↗</span></span>
+            </div>
+          </a>
+        </article>
+
+        <!-- 2 : La Route du Rome -->
+        <article class="card" style="--tint:var(--peach);--accent:var(--violet)">
+          <a class="card-link" href="https://marieroubault-creator.github.io/Route-du-Rome/" target="_blank" rel="noopener" aria-label="Ouvrir La Route du Rome (nouvel onglet)">
+            <div class="thumb">
+              <svg viewBox="0 0 400 250" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+                <rect width="400" height="250" fill="#FFE3D3"/>
+                <rect x="0" y="200" width="400" height="50" fill="#CFE4FF"/>
+                <path d="M0 214 H60 M90 214 H170 M200 214 H290 M320 214 H400 M30 232 H120 M150 232 H240 M270 232 H370" stroke="#fff" stroke-width="3"/>
+                <path d="M30 190 H120 L170 130 H260 L320 80" fill="none" stroke="#fff" stroke-width="22" stroke-linejoin="miter"/>
+                <path d="M30 190 H120 L170 130 H260 L320 80" fill="none" stroke="#2B2540" stroke-width="3" stroke-dasharray="10 9" stroke-linejoin="miter"/>
+                <line x1="320" y1="80" x2="320" y2="26" stroke="#2B2540" stroke-width="4"/>
+                <path d="M322 28 H366 L352 44 L366 60 H322Z" fill="#FF5C7A" stroke="#2B2540" stroke-width="3" stroke-linejoin="miter"/>
+                <rect x="22" y="22" width="150" height="14" rx="2" fill="#fff" stroke="#2B2540" stroke-width="2.5"/>
+                <rect x="25" y="25" width="58" height="8" fill="#19C3A6"/>
+                <rect x="22" y="48" width="74" height="26" rx="3" fill="#FFC93C" stroke="#2B2540" stroke-width="2.5"/>
+                <text x="59" y="66" text-anchor="middle" font-family="Della Respira,Georgia,serif" font-size="13" font-weight="700" fill="#2B2540">NIVEAU</text>
+                <g transform="translate(70 168)">
+                  <circle r="18" fill="#fff" stroke="#2B2540" stroke-width="3"/>
+                  <path d="M0 -12 L5 0 L0 12 L-5 0Z" fill="#FF5C7A"/>
+                  <circle r="2.5" fill="#2B2540"/>
+                </g>
+              </svg>
+              <img class="shot" src="img/route-du-rome.png" alt="Capture d'écran de La Route du Rome" loading="lazy" onerror="this.remove()">
+              <span class="tag">Jeu</span>
+            </div>
+            <div class="body">
+              <h3>La Route du Rome</h3>
+              <p>Un jeu d'exploration : on incarne Élio ou Élia pour découvrir les métiers d'Ille-et-Vilaine, gagner de l'expérience et monter de niveau, en musique et en ambiance maritime.</p>
+              <span class="go"><b>Ouvrir le site</b><span aria-hidden="true">↗</span></span>
+            </div>
+          </a>
+        </article>
+
+        <!-- 3 : Connect Emploi -->
+        <article class="card" style="--tint:var(--lavender);--accent:var(--teal)">
+          <a class="card-link" href="https://marieroubault-creator.github.io/Connect-emploi/" target="_blank" rel="noopener" aria-label="Ouvrir Connect Emploi (nouvel onglet)">
+            <div class="thumb">
+              <svg viewBox="0 0 400 250" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+                <rect width="400" height="250" fill="#E9E4FF"/>
+                <rect x="40" y="150" width="70" height="70" fill="#DAD2FF" transform="rotate(14 75 185)"/>
+                <rect x="290" y="150" width="60" height="60" fill="#DAD2FF" transform="rotate(-10 320 180)"/>
+                <rect x="140" y="14" width="120" height="222" rx="10" fill="#fff" stroke="#2B2540" stroke-width="3"/>
+                <rect x="182" y="22" width="36" height="5" rx="1" fill="#2B2540"/>
+                <g transform="rotate(-6 200 106)">
+                  <rect x="153" y="42" width="94" height="124" rx="5" fill="#FFC93C" stroke="#2B2540" stroke-width="3"/>
+                  <rect x="178" y="62" width="44" height="44" rx="3" fill="#fff" stroke="#2B2540" stroke-width="2.5"/>
+                  <rect x="168" y="121" width="64" height="8" fill="#fff"/>
+                  <rect x="176" y="139" width="48" height="8" fill="#fff" opacity=".7"/>
+                </g>
+                <rect x="152" y="188" width="36" height="32" rx="4" fill="#fff" stroke="#2B2540" stroke-width="3"/>
+                <path d="M164 197 L176 211 M176 197 L164 211" stroke="#2B2540" stroke-width="3.5"/>
+                <rect x="212" y="188" width="36" height="32" rx="4" fill="#FF5C7A" stroke="#2B2540" stroke-width="3"/>
+                <path d="M230 211 C219 204 219 196 224.5 196 C227.5 196 230 198 230 200.5 C230 198 232.5 196 235.5 196 C241 196 241 204 230 211Z" fill="#fff"/>
+                <g transform="translate(316 74) rotate(8)">
+                  <rect x="-50" y="-19" width="100" height="38" rx="3" fill="#19C3A6" stroke="#2B2540" stroke-width="3"/>
+                  <text x="0" y="6" text-anchor="middle" font-family="Della Respira,Georgia,serif" font-size="15" font-weight="700" fill="#fff">MATCH</text>
+                </g>
+              </svg>
+              <img class="shot" src="img/connect-emploi.png" alt="Capture d'écran de Connect Emploi" loading="lazy" onerror="this.remove()">
+              <span class="tag">Appli</span>
+            </div>
+            <div class="body">
+              <h3>Connect Emploi</h3>
+              <p>Une appli installable façon « swipe » : on fait glisser les métiers qui plaisent, et chaque match devient une piste à explorer. Un clin d'œil au monde de la course au large.</p>
+              <span class="go"><b>Ouvrir le site</b><span aria-hidden="true">↗</span></span>
+            </div>
+          </a>
+        </article>
+
+        <!-- 4 : Atelier Senior -->
+        <article class="card" style="--tint:var(--sky);--accent:var(--sun)">
+          <a class="card-link" href="https://marieroubault-creator.github.io/AtelierSenior/" target="_blank" rel="noopener" aria-label="Ouvrir Atelier Senior (nouvel onglet)">
+            <div class="thumb">
+              <svg viewBox="0 0 400 250" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+                <rect width="400" height="250" fill="#DDEBFF"/>
+                <rect x="30" y="170" width="64" height="64" fill="#CADFFF" transform="rotate(10 62 202)"/>
+                <rect x="318" y="26" width="56" height="56" fill="#CADFFF" transform="rotate(-8 346 54)"/>
+                <rect x="62" y="34" width="276" height="152" rx="6" fill="#fff" stroke="#2B2540" stroke-width="3"/>
+                <rect x="76" y="48" width="248" height="124" rx="3" fill="#FFE3D3"/>
+                <rect x="172" y="82" width="56" height="56" rx="4" fill="#FF5C7A" stroke="#2B2540" stroke-width="3"/>
+                <path d="M190 96 L215 110 L190 124Z" fill="#fff"/>
+                <path d="M42 110 L54 98 M42 110 L54 122" stroke="#2B2540" stroke-width="4" fill="none"/>
+                <path d="M358 110 L346 98 M358 110 L346 122" stroke="#2B2540" stroke-width="4" fill="none"/>
+                <rect x="84" y="56" width="78" height="22" rx="2" fill="#FFC93C" stroke="#2B2540" stroke-width="2.5"/>
+                <text x="123" y="72" text-anchor="middle" font-family="Della Respira,Georgia,serif" font-size="11" font-weight="700" fill="#2B2540">À L'AFFICHE</text>
+                <rect x="169" y="210" width="12" height="12" fill="#fff" stroke="#2B2540" stroke-width="2.5"/>
+                <rect x="194" y="210" width="12" height="12" fill="#FF5C7A" stroke="#2B2540" stroke-width="2.5"/>
+                <rect x="219" y="210" width="12" height="12" fill="#fff" stroke="#2B2540" stroke-width="2.5"/>
+              </svg>
+              <img class="shot" src="img/atelier-senior.png" alt="Capture d'écran d'Atelier Senior" loading="lazy" onerror="this.remove()">
+              <span class="tag">Atelier</span>
+            </div>
+            <div class="body">
+              <h3>Atelier Senior</h3>
+              <p>Un espace numérique pensé pour les seniors, avec une interface simple à parcourir, une sélection « à l'affiche » et un mode lecture confortable.</p>
+              <span class="go"><b>Ouvrir le site</b><span aria-hidden="true">↗</span></span>
+            </div>
+          </a>
+        </article>
+
+      </div>
+      </div>
+
+      <div class="panel" role="tabpanel" id="panel-affiches" aria-labelledby="tab-affiches" tabindex="0" hidden>
+        <p class="panel-intro">Mes affiches, classées par lieu. Cliquez sur une vignette pour l'ouvrir dans un nouvel onglet.</p>
+
+        <div class="subsection" id="affiches-saint-denis">
+          <h3 class="sub-title">Saint-Denis</h3>
+          <div class="docs" id="list-affiches-saint-denis"></div>
+        </div>
+
+        <div class="subsection" id="affiches-saint-malo">
+          <h3 class="sub-title">Saint-Malo</h3>
+          <div class="docs" id="list-affiches-saint-malo"></div>
+        </div>
+      </div>
+
+      <div class="panel" role="tabpanel" id="panel-supports" aria-labelledby="tab-supports" tabindex="0" hidden>
+        <p class="panel-intro">Mes diaporamas et documents de présentation. Cliquez sur une vignette pour l'ouvrir dans un nouvel onglet.</p>
+        <div class="docs" id="list-supports"></div>
+      </div>
+
+      <div class="panel" role="tabpanel" id="panel-videos" aria-labelledby="tab-videos" tabindex="0" hidden>
+        <p class="panel-intro">Mes vidéos. Cliquez sur une vignette pour la lire.</p>
+        <div class="docs" id="list-videos"></div>
+      </div>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="a-propos">
+    <div class="wrap">
+      <div class="section-head"><h2>À propos</h2></div>
+      <p class="section-sub">Ce qui relie toutes ces créations.</p>
+      <div class="about">
+        <div class="box">
+          <h3>Ma démarche</h3>
+          <p>Je pars des besoins des personnes : trouver sa voie, se repérer parmi les métiers, oser franchir la porte d'un employeur ou d'un outil numérique.</p>
+          <p>Puis je conçois des parcours clairs, accessibles et un brin ludiques, pour que la démarche donne envie plutôt que de décourager.</p>
+        </div>
+        <div class="box alt">
+          <h3>Mes points forts</h3>
+          <ul class="chips">
+            <li>Conception de parcours</li>
+            <li>Ludification</li>
+            <li>Accessibilité numérique</li>
+            <li>Découverte des métiers</li>
+            <li>Création web</li>
+            <li>Écoute des publics</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" style="padding-top:0">
+    <div class="wrap">
+      <div class="contact">
+        <div>
+          <h2>Échangeons</h2>
+          <p>Un projet, une question, une candidature : je serai ravie d'en discuter.</p>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="mailto:votre-adresse@exemple.fr">Écrire un message</a>
+          <a class="btn" href="cv.pdf" target="_blank" rel="noopener">Télécharger mon CV</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Projets personnels et prototypes</strong>, réalisés à titre de démonstration. Ils ne sont pas des services officiels et n'engagent aucun organisme.</p>
+    <p>© <span id="year">2026</span> Marie Roubault · Page hébergée sur GitHub Pages</p>
+  </div>
+</footer>
+
+<dialog class="vdialog" id="video-dialog" aria-labelledby="video-title">
+  <div class="vbar">
+    <p class="vtitle" id="video-title"></p>
+    <button class="vclose" id="video-close" type="button" aria-label="Fermer la vidéo">✕</button>
+  </div>
+  <div class="vstage" id="video-stage"></div>
+</dialog>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  (function () {
+    var burger = document.getElementById('burger');
+    var menu = document.getElementById('menu');
+    var backdrop = document.getElementById('menu-backdrop');
+    function setOpen(open) {
+      document.body.classList.toggle('menu-open', open);
+      burger.setAttribute('aria-expanded', String(open));
+      burger.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    }
+    burger.addEventListener('click', function () {
+      setOpen(!document.body.classList.contains('menu-open'));
+    });
+    backdrop.addEventListener('click', function () { setOpen(false); });
+    menu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () { setOpen(false); });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && document.body.classList.contains('menu-open')) {
+        setOpen(false);
+        burger.focus();
+      }
+    });
+  })();
+
+  /* =====================================================================
+     VOS DOCUMENTS
+     Pour ajouter un document : copiez une ligne { ... }, changez le titre,
+     la description et le nom du fichier, puis déposez le fichier dans le
+     dossier indiqué (affiches/ ou supports/) de votre dépôt GitHub.
+     - Si le fichier est une image (png, jpg), elle sert d'aperçu.
+     - Pour un PDF, ajoutez si vous voulez un aperçu :
+         vignette: "affiches/apercu-affiche-1.png"
+     ===================================================================== */
+  var AFFICHES_SAINT_DENIS = [
+    { titre: "Affiche à compléter", description: "Titre et courte description à compléter.", fichier: "affiches/saint-denis/affiche-1.pdf" },
+    { titre: "Affiche à compléter", description: "Titre et courte description à compléter.", fichier: "affiches/saint-denis/affiche-2.pdf" }
+  ];
+  var AFFICHES_SAINT_MALO = [
+    { titre: "Affiche à compléter", description: "Titre et courte description à compléter.", fichier: "affiches/saint-malo/affiche-1.pdf" },
+    { titre: "Affiche à compléter", description: "Titre et courte description à compléter.", fichier: "affiches/saint-malo/affiche-2.pdf" }
+  ];
+  var SUPPORTS = [
+    { titre: "Support à compléter", description: "Titre et courte description à compléter.", fichier: "supports/support-1.pdf" },
+    { titre: "Support à compléter", description: "Titre et courte description à compléter.", fichier: "supports/support-2.pdf" }
+  ];
+
+  /* Vidéos : un fichier mp4 déposé dans le dossier videos/, ou un lien YouTube.
+     Exemples :
+       { titre: "Présentation", description: "Ma vidéo.", fichier: "videos/presentation.mp4" },
+       { titre: "Ma vidéo", description: "Sur YouTube.", youtube: "https://www.youtube.com/watch?v=XXXXXXXXXXX" },
+     Aperçu facultatif : vignette: "videos/apercu.png"
+     Attention : GitHub limite chaque fichier à 25 Mo en dépôt par le navigateur
+     (100 Mo en ligne de commande). Au-delà, utilisez YouTube. */
+  var VIDEOS = [
+    { titre: "Vidéo à compléter", description: "Titre et courte description à compléter.", fichier: "videos/video-1.mp4" },
+    { titre: "Vidéo à compléter", description: "Titre et courte description à compléter.", fichier: "videos/video-2.mp4" }
+  ];
+  /* ===================== fin de la zone à modifier ===================== */
+
+  (function () {
+    var TINTS = ['#FFE3D3', '#E9E4FF', '#DFF3EA', '#DDEBFF'];
+    var ACCENTS = ['#FF5C7A', '#7B5CFF', '#19C3A6', '#FFC93C'];
+    var IMG = /\.(png|jpe?g|webp|gif|svg)$/i;
+
+    function esc(t) {
+      return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+
+    function posterSvg(t, a) {
+      return '<svg viewBox="0 0 300 400" aria-hidden="true" preserveAspectRatio="xMidYMid slice">' +
+        '<rect width="300" height="400" fill="' + t + '"/>' +
+        '<rect x="34" y="30" width="232" height="340" rx="2" fill="#fff" stroke="#2B2540" stroke-width="3"/>' +
+        '<rect x="52" y="48" width="196" height="150" fill="' + a + '"/>' +
+        '<path d="M52 198 L130 110 L180 160 L206 134 L248 198Z" fill="#fff" fill-opacity=".55"/>' +
+        '<rect x="196" y="70" width="32" height="32" fill="#fff" fill-opacity=".8"/>' +
+        '<rect x="52" y="218" width="150" height="14" fill="#2B2540"/>' +
+        '<rect x="52" y="242" width="104" height="14" fill="#2B2540" fill-opacity=".55"/>' +
+        '<rect x="52" y="276" width="196" height="6" fill="#2B2540" fill-opacity=".18"/>' +
+        '<rect x="52" y="292" width="196" height="6" fill="#2B2540" fill-opacity=".18"/>' +
+        '<rect x="52" y="308" width="140" height="6" fill="#2B2540" fill-opacity=".18"/>' +
+        '<rect x="52" y="336" width="64" height="16" fill="#2B2540"/>' +
+        '</svg>';
+    }
+
+    function slideSvg(t, a) {
+      return '<svg viewBox="0 0 400 250" aria-hidden="true" preserveAspectRatio="xMidYMid slice">' +
+        '<rect width="400" height="250" fill="' + t + '"/>' +
+        '<rect x="56" y="32" width="288" height="180" rx="3" fill="#fff" stroke="#2B2540" stroke-width="3"/>' +
+        '<rect x="56" y="32" width="12" height="180" fill="' + a + '"/>' +
+        '<rect x="86" y="54" width="150" height="14" fill="#2B2540"/>' +
+        '<rect x="86" y="78" width="100" height="8" fill="#2B2540" fill-opacity=".4"/>' +
+        '<rect x="86" y="128" width="26" height="60" fill="' + a + '"/>' +
+        '<rect x="122" y="108" width="26" height="80" fill="' + a + '" fill-opacity=".7"/>' +
+        '<rect x="158" y="140" width="26" height="48" fill="' + a + '" fill-opacity=".5"/>' +
+        '<rect x="228" y="116" width="94" height="8" fill="#2B2540" fill-opacity=".18"/>' +
+        '<rect x="228" y="136" width="94" height="8" fill="#2B2540" fill-opacity=".18"/>' +
+        '<rect x="228" y="156" width="60" height="8" fill="#2B2540" fill-opacity=".18"/>' +
+        '</svg>';
+    }
+
+    function render(list, el, kind) {
+      if (!el) { return; }
+      if (!list.length) {
+        el.innerHTML = '<p class="empty">Les documents arrivent bientôt.</p>';
+        return;
+      }
+      el.innerHTML = list.map(function (d, i) {
+        var t = TINTS[i % TINTS.length], a = ACCENTS[i % ACCENTS.length];
+        var ext = (String(d.fichier).split('.').pop() || 'doc').toUpperCase();
+        var shot = d.vignette || (IMG.test(d.fichier) ? d.fichier : '');
+        var label = kind === 'poster' ? "Voir l'affiche" : 'Voir le support';
+        return '<article class="card doc ' + (kind === 'poster' ? 'poster' : 'slide') + '" style="--tint:' + t + ';--accent:' + a + '">' +
+          '<a class="card-link" href="' + esc(d.fichier) + '" target="_blank" rel="noopener" aria-label="' + esc(label + ' : ' + d.titre) + ' (nouvel onglet)">' +
+            '<div class="thumb">' +
+              (kind === 'poster' ? posterSvg(t, a) : slideSvg(t, a)) +
+              (shot ? '<img class="shot" src="' + esc(shot) + '" alt="Aperçu : ' + esc(d.titre) + '" loading="lazy" onerror="this.remove()">' : '') +
+              '<span class="tag">' + esc(ext) + '</span>' +
+            '</div>' +
+            '<div class="body">' +
+              '<h3>' + esc(d.titre) + '</h3>' +
+              (d.description ? '<p>' + esc(d.description) + '</p>' : '') +
+              '<span class="go"><b>' + label + '</b><span aria-hidden="true">↗</span></span>' +
+            '</div>' +
+          '</a></article>';
+      }).join('');
+    }
+
+    function videoSvg(t, a) {
+      return '<svg viewBox="0 0 400 250" aria-hidden="true" preserveAspectRatio="xMidYMid slice">' +
+        '<rect width="400" height="250" fill="' + t + '"/>' +
+        '<rect x="40" y="30" width="320" height="190" rx="3" fill="#fff" stroke="#2B2540" stroke-width="3"/>' +
+        '<rect x="54" y="44" width="292" height="138" fill="' + a + '" fill-opacity=".35"/>' +
+        '<path d="M54 182 L130 120 L180 160 L230 100 L346 182Z" fill="#fff" fill-opacity=".6"/>' +
+        '<rect x="54" y="196" width="292" height="6" fill="#2B2540" fill-opacity=".18"/>' +
+        '<rect x="54" y="196" width="110" height="6" fill="' + a + '"/>' +
+        '</svg>';
+    }
+
+    function youtubeId(v) {
+      var str = String(v || '');
+      var m = str.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([A-Za-z0-9_-]{11})/);
+      if (m) { return m[1]; }
+      return /^[A-Za-z0-9_-]{11}$/.test(str) ? str : '';
+    }
+
+    function renderVideos(list, el) {
+      if (!el) { return; }
+      if (!list.length) {
+        el.innerHTML = '<p class="empty">Les vidéos arrivent bientôt.</p>';
+        return;
+      }
+      el.innerHTML = list.map(function (d, i) {
+        var t = TINTS[i % TINTS.length], a = ACCENTS[i % ACCENTS.length];
+        var yt = youtubeId(d.youtube);
+        var href = yt ? 'https://www.youtube.com/watch?v=' + yt : (d.fichier || '#');
+        var media = '';
+        if (d.vignette) {
+          media = '<img class="shot" src="' + esc(d.vignette) + '" alt="Aperçu : ' + esc(d.titre) + '" loading="lazy" onerror="this.remove()">';
+        } else if (yt) {
+          media = '<img class="shot" src="https://i.ytimg.com/vi/' + yt + '/hqdefault.jpg" alt="Aperçu : ' + esc(d.titre) + '" loading="lazy" onerror="this.remove()">';
+        } else if (d.fichier) {
+          media = '<video class="shot" src="' + esc(d.fichier) + '#t=0.5" muted playsinline preload="metadata" tabindex="-1" aria-hidden="true" onerror="this.remove()"></video>';
+        }
+        var tag = yt ? 'YouTube' : (String(d.fichier || '').split('.').pop() || 'vidéo').toUpperCase();
+        return '<article class="card doc video" style="--tint:' + t + ';--accent:' + a + '">' +
+          '<a class="card-link" href="' + esc(href) + '" target="_blank" rel="noopener" data-video="' + i + '" aria-label="' + esc('Lire la vidéo : ' + d.titre) + '">' +
+            '<div class="thumb">' + videoSvg(t, a) + media + '<span class="tag">' + esc(tag) + '</span></div>' +
+            '<div class="body">' +
+              '<h3>' + esc(d.titre) + '</h3>' +
+              (d.description ? '<p>' + esc(d.description) + '</p>' : '') +
+              '<span class="go"><b>Lire la vidéo</b><span aria-hidden="true">↗</span></span>' +
+            '</div>' +
+          '</a></article>';
+      }).join('');
+    }
+
+    render(AFFICHES_SAINT_DENIS, document.getElementById('list-affiches-saint-denis'), 'poster');
+    render(AFFICHES_SAINT_MALO, document.getElementById('list-affiches-saint-malo'), 'poster');
+    render(SUPPORTS, document.getElementById('list-supports'), 'slide');
+    renderVideos(VIDEOS, document.getElementById('list-videos'));
+
+    /* Lecteur vidéo en fenêtre */
+    var dlg = document.getElementById('video-dialog');
+    var stage = document.getElementById('video-stage');
+    var vtitle = document.getElementById('video-title');
+    function openVideo(d) {
+      if (!dlg || typeof dlg.showModal !== 'function') { return false; }
+      stage.innerHTML = '';
+      var yt = youtubeId(d.youtube), node;
+      if (yt) {
+        node = document.createElement('iframe');
+        node.src = 'https://www.youtube-nocookie.com/embed/' + yt + '?autoplay=1&rel=0';
+        node.title = d.titre;
+        node.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+        node.setAttribute('allowfullscreen', '');
+      } else {
+        node = document.createElement('video');
+        node.src = d.fichier;
+        node.controls = true;
+        node.autoplay = true;
+        node.setAttribute('playsinline', '');
+      }
+      stage.appendChild(node);
+      vtitle.textContent = d.titre;
+      dlg.showModal();
+      return true;
+    }
+    function closeVideo() { if (dlg && dlg.open) { dlg.close(); } }
+    if (dlg) {
+      dlg.addEventListener('close', function () { stage.innerHTML = ''; });
+      dlg.addEventListener('click', function (e) { if (e.target === dlg) { closeVideo(); } });
+    }
+    document.getElementById('video-close').addEventListener('click', closeVideo);
+    document.getElementById('list-videos').addEventListener('click', function (e) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey) { return; }
+      var link = e.target.closest ? e.target.closest('a[data-video]') : null;
+      if (!link) { return; }
+      var d = VIDEOS[Number(link.getAttribute('data-video'))];
+      if (d && openVideo(d)) { e.preventDefault(); }
+    });
+
+    /* Onglets */
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+    var binder = document.querySelector('.binder');
+    function activate(name, focus) {
+      if (binder) { binder.setAttribute('data-active', name); }
+      tabs.forEach(function (t) {
+        var on = t.getAttribute('data-tab') === name;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById('panel-' + t.getAttribute('data-tab')).hidden = !on;
+        if (on && focus) { t.focus(); }
+      });
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { activate(t.getAttribute('data-tab')); });
+      t.addEventListener('keydown', function (e) {
+        var n = -1;
+        if (e.key === 'ArrowRight') { n = (i + 1) % tabs.length; }
+        else if (e.key === 'ArrowLeft') { n = (i - 1 + tabs.length) % tabs.length; }
+        else if (e.key === 'Home') { n = 0; }
+        else if (e.key === 'End') { n = tabs.length - 1; }
+        if (n > -1) { e.preventDefault(); activate(tabs[n].getAttribute('data-tab'), true); }
+      });
+    });
+    document.querySelectorAll('[data-tab-link]').forEach(function (a) {
+      a.addEventListener('click', function () { activate(a.getAttribute('data-tab-link')); });
+    });
+  })();
+</script>
+</body>
+</html>
